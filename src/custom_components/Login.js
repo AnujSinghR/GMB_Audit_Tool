@@ -12,21 +12,18 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
     try {
-      setError('');
-      setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
+      navigate('/dashboard'); // Navigate on successful login
+      emailRef.current.value = ''; // Clear email input field
+      passwordRef.current.value = ''; // Clear password input field
     } catch (error) {
       setError('Failed to log in: ' + error.message);
     }
-   
-    if(error===""){
-      console.log("login is valid",error);
-      //navigate('/dashboard');
-    }else{
-      console.log("login is invalid",error);
-    }
+
     setLoading(false);
   }
 
@@ -38,6 +35,7 @@ export default function Login() {
             Log in to your account
           </h2>
         </div>
+        {error && <div className="text-red-500 text-sm">{error}</div>}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">

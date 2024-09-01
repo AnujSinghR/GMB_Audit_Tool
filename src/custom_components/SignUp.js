@@ -16,6 +16,9 @@ export default function SignUp() {
       setLoading(true);
        // Add user data to Firebase auth
       await signup(emailRef.current.value,passwordRef.current.value);
+      emailRef.current.value='';
+      passwordRef.current.value='';
+      passwordConfirmRef.current.value='';
       
     } catch (err) {
       setError('Failed to create an account'+ error);
